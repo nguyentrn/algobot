@@ -19,13 +19,14 @@ const checkDataLost = async coin => {
     .select("time")
     .orderBy("time");
   // .limit(100);
+  console.log(coin.name, total.length);
   if (total.length) {
     let before = new Date(total[0].time).getTime();
     let after = new Date(total[1].time).getTime();
     for (let i = 1; i < total.length; i++) {
       if (after - before === 60000) {
       } else {
-        console.log((after - before) / 60000 - 2);
+        // console.log((after - before) / 60000 - 2);
         (async () => {
           const res = await axios(
             `https://www.binance.com/api/v1/klines?symbol=${
@@ -33,7 +34,9 @@ const checkDataLost = async coin => {
             }USDT&interval=1m&endTime=${after - 60000}&startTime=${before +
               60000}`
           );
-          console.log(res.data.length);
+          if (res.data.length > 0) {
+            console.log(res.data.length);
+          }
           await insert(coin, res.data);
         })();
       }
@@ -54,7 +57,6 @@ const checkDataLost = async coin => {
     name: dt.slug.replace("-", "_"),
     symbol: dt.symbol
   }));
-  console.log(coins);
   for (let i = 0; i < coins.length; i++) {
     await checkDataLost(coins[i]);
   }
