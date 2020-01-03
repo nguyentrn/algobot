@@ -43,6 +43,10 @@ const scraper = async model => {
         // }
         // });
       }
+      if (coins.data.length < 1000) {
+        break;
+      }
+
       await delay(10000);
     }
   } catch (err) {

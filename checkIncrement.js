@@ -19,28 +19,28 @@ const checkDataLost = async coin => {
     .select("time")
     .orderBy("time");
   // .limit(100);
-
-  let before = new Date(total[0].time).getTime();
-  let after = new Date(total[1].time).getTime();
-  for (let i = 1; i < total.length; i++) {
-    if (after - before === 60000) {
-    } else {
-      console.log((after - before) / 60000 - 2);
-      (async () => {
-        const res = await axios(
-          `https://www.binance.com/api/v1/klines?symbol=${
-            coin.symbol
-          }USDT&interval=1m&endTime=${after - 60000}&startTime=${before +
-            60000}`
-        );
-        console.log(res.data.length);
-        await insert(coin, res.data);
-      })();
+  if (total.length) {
+    let before = new Date(total[0].time).getTime();
+    let after = new Date(total[1].time).getTime();
+    for (let i = 1; i < total.length; i++) {
+      if (after - before === 60000) {
+      } else {
+        console.log((after - before) / 60000 - 2);
+        (async () => {
+          const res = await axios(
+            `https://www.binance.com/api/v1/klines?symbol=${
+              coin.symbol
+            }USDT&interval=1m&endTime=${after - 60000}&startTime=${before +
+              60000}`
+          );
+          console.log(res.data.length);
+          await insert(coin, res.data);
+        })();
+      }
+      before = after;
+      after = total[i + 1] && new Date(total[i + 1].time).getTime();
     }
-    before = after;
-    after = total[i + 1] && new Date(total[i + 1].time).getTime();
   }
-
   console.log("Done !");
   return 0;
 };
