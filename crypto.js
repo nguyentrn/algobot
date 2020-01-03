@@ -56,17 +56,18 @@ const scraper = async () => {
   const res = await pg("crypto")
     .select("*")
     .orderBy("num_market_pairs", "DESC")
-    .limit(10);
-  console.log(res);
+    .limit(11);
+  // console.log(res);
   res.forEach(async c => {
     if (c.slug !== "tether") {
       const name = c.slug.replace("-", "_");
       if (!tables.find(t => name === t)) {
         await pg.schema.createTable(name, function(table) {
-          table.timestamp("time");
-          // .unique()
-          // .primary()
-          // .notNullable();
+          table
+            .timestamp("time")
+            .unique()
+            .primary()
+            .notNullable();
           table.float("open");
           table.float("high");
           table.float("low");

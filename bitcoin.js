@@ -4,7 +4,7 @@
 //
 //
 //
-const scraper = require("./model");
+const scraper = require("./binanceChart");
 const pg = require("./database");
 const delay = time => {
   return new Promise(function(resolve) {
