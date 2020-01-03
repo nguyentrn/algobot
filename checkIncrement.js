@@ -44,7 +44,6 @@ const checkDataLost = async coin => {
       after = total[i + 1] && new Date(total[i + 1].time).getTime();
     }
   }
-  console.log("Done !");
   return 0;
 };
 
