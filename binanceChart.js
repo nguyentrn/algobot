@@ -28,9 +28,7 @@ const scraper = async model => {
       }&limit=1000`;
       console.log(i, model.symbol);
       const coins = await axios(link);
-      if (coins.data.length < 1000) {
-        break;
-      }
+
       if (coins.data.length) {
         // coins.data.forEach(async dt => {
         // const scrapedA = await pg(model.name)
