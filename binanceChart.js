@@ -15,7 +15,7 @@ const delay = time => {
 
 const scraper = async model => {
   try {
-    for (let i = 0; i < 50; i++) {
+    for (let i = 0; i < 10000; i++) {
       const lastTimeDate = await pg(model.name)
         // .select("*")
         .min("time")
