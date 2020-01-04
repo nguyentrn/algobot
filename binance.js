@@ -18,16 +18,29 @@ const exchangeId = "binance",
   //   { name: "bitcoin".concat(`_${exchangeId}`), symbol: "BTC" },
   //   "BTC/USDT"
   // );
+  const prdA = await exchange.loadMarkets();
+  const prd = Object.keys(prdA);
+
   const coins = await pg("crypto")
     .select("*")
     .orderBy("cmc_rank")
-    .limit(10)
+    .limit(100)
     .offset(1);
   for (let i = 0; i < coins.length; i++) {
-    await getBtc(
-      exchange,
-      { name: coins[i].slug.concat(`_${exchangeId}`), symbol: coins[i].symbol },
-      `${coins[i].symbol}/BTC`
-    );
+    const trade = `${coins[i].symbol}/BTC`;
+
+    if (prd.find(c => c === trade)) {
+      console.log(`Find ${coins[i].slug}`);
+      await getBtc(
+        exchange,
+        {
+          name: coins[i].slug.concat(`_${exchangeId}`),
+          symbol: coins[i].symbol
+        },
+        trade
+      );
+    } else {
+      console.log(`CANTTTTT NOT FIND ${coins[i].slug}`);
+    }
   }
 })();
