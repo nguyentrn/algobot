@@ -6,8 +6,8 @@ const getBtc = require("./getCoinFactory");
 const exchangeId = "bitmex",
   exchangeClass = ccxt[exchangeId],
   exchange = new exchangeClass({
-    apiKey: "jshXgEK1klUiDZk8WKeMq2sv92SGKMRUqA6FRH1E42Qy9QjsvbGTvwE3i0otSoOj",
-    secret: "4JBc8umq8MNBxRfN7DYRUL4vpUZieKCI7HdvvVmU2Wo9wZGa5qGEpyic4n4tL4kw",
+    // apiKey: "jshXgEK1klUiDZk8WKeMq2sv92SGKMRUqA6FRH1E42Qy9QjsvbGTvwE3i0otSoOj",
+    // secret: "4JBc8umq8MNBxRfN7DYRUL4vpUZieKCI7HdvvVmU2Wo9wZGa5qGEpyic4n4tL4kw",
     timeout: 30000,
     enableRateLimit: true
   });
@@ -16,7 +16,7 @@ const exchangeId = "bitmex",
   await getBtc(
     exchange,
     { name: "bitcoin".concat(`_${exchangeId}`), symbol: "BTC" },
-    "BTC/USDT"
+    "BTC/USD"
   );
   // const coins = await pg("crypto")
   //   .select("*")
