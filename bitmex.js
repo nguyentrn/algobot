@@ -1,6 +1,7 @@
 const ccxt = require("ccxt");
 const pg = require("./database");
 const upsert = require("./upsert");
+const getBtc = require("./getCoinFactory");
 
 const exchangeId = "bitmex",
   exchangeClass = ccxt[exchangeId],
