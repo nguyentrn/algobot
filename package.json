@@ -1,25 +1,16 @@
 {
-  "name": "scraper",
+  "name": "algo",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "main": "database.js",
   "scripts": {
-    "scrape": "node scrape.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
   "author": "",
   "license": "ISC",
+  "description": "",
   "dependencies": {
-    "axios": "^0.19.0",
-    "cheerio": "^1.0.0-rc.3",
-    "knex": "^0.20.2",
-    "mathjs": "^6.3.0",
-    "mongoose": "^5.7.1",
-    "node-fetch": "^2.6.0",
-    "pg": "^7.14.0"
-  },
-  "devDependencies": {},
-  "engines": {
-    "node": ">=10.0.0"
+    "ccxt": "^1.21.30",
+    "knex": "^0.20.6",
+    "pg": "^7.17.0"
   }
 }
