@@ -10,7 +10,7 @@ const getBtc = async (exchange, coin, symbol) => {
       const since = lastTime[0].max
         ? new Date(lastTime[0].max).getTime() + 60000
         : 1000000000000;
-      console.log(since);
+      // console.log(since);
       // const symbol = "BTC/USDT";
       const timeframe = "1m";
       const limit = 1000;
@@ -33,7 +33,7 @@ const getCoin = async coin => {
   const coins = await pg("crypto")
     .select("*")
     .orderBy("cmc_rank")
-    .limit(10)
+    .limit(100)
     .offset(1);
   for (let i = 0; i < coins.length; i++) {
     await getBtc(

@@ -13,21 +13,21 @@ const exchangeId = "bitmex",
   });
 
 (async () => {
-  await getBtc(
-    exchange,
-    { name: "bitcoin".concat(`_${exchangeId}`), symbol: "BTC" },
-    "BTC/USD"
-  );
-  // const coins = await pg("crypto")
-  //   .select("*")
-  //   .orderBy("cmc_rank")
-  //   .limit(10)
-  //   .offset(1);
-  // for (let i = 0; i < coins.length; i++) {
-  //   await getBtc(
-  //     exchange,
-  //     { name: coins[i].slug.concat(`_${exchangeId}`), symbol: coins[i].symbol },
-  //     `${coins[i].symbol}/BTC`
-  //   );
-  // }
+  // await getBtc(
+  //   exchange,
+  //   { name: "bitcoin".concat(`_${exchangeId}`), symbol: "BTC" },
+  //   "BTC/USD"
+  // );
+  const coins = await pg("crypto")
+    .select("*")
+    .orderBy("cmc_rank")
+    .limit(10)
+    .offset(1);
+  for (let i = 0; i < coins.length; i++) {
+    await getBtc(
+      exchange,
+      { name: coins[i].slug.concat(`_${exchangeId}`), symbol: coins[i].symbol },
+      `${coins[i].symbol}/BTC`
+    );
+  }
 })();

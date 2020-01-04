@@ -21,7 +21,7 @@ const createTable = async exchange => {
   const res = await pg("crypto")
     .select("*")
     .orderBy("cmc_rank")
-    .limit(10)
+    .limit(100)
     .offset(1);
   res.forEach(async c => {
     const name = `${c.slug}_${exchange}`;
