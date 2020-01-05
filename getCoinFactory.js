@@ -5,9 +5,9 @@ const upsert = require("./upsert");
 const getBtc = async (exchange, coin, symbol) => {
   try {
     if (exchange.has["fetchOHLCV"]) {
+      console.log(coin.name);
       for (let i = 0; i < 10000; i++) {
         const lastTime = await pg(coin.name).max("time");
-        console.log(lastTime[0].max);
         const since = lastTime[0].max
           ? new Date(lastTime[0].max).getTime() + 60000
           : 1000000000000;

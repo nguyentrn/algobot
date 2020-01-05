@@ -30,7 +30,6 @@ const exchangeId = "binance",
     const trade = `${coins[i].symbol}/BTC`;
 
     if (prd.find(c => c === trade)) {
-      console.log(`Find ${coins[i].slug}`);
       await getBtc(
         exchange,
         {

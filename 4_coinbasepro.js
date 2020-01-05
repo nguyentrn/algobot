@@ -69,7 +69,6 @@ const exchangeId = "coinbasepro",
     key: c[0],
     name: `${c[1].base}/${c[1].quote}`
   }));
-  console.log(prd);
 
   const coins = await pg("crypto")
     .select("*")
@@ -80,7 +79,6 @@ const exchangeId = "coinbasepro",
     const trade = `${coins[i].symbol}/BTC`;
     const s = prd.find(c => c.name === trade);
     if (s) {
-      console.log(`Find ${coins[i].slug}`);
       await getBtc(
         {
           name: coins[i].slug.concat(`_${exchangeId}`),

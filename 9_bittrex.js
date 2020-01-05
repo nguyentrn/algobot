@@ -106,7 +106,6 @@ const exchangeId = "bittrex",
     }
 
     if (s) {
-      console.log(`Find ${coins[i].slug}`);
       await getBtc(
         exchange,
         {

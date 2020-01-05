@@ -23,7 +23,6 @@ const exchangeId = "hitbtc",
     key: c[0],
     name: `${c[1].base}/${c[1].quote}`
   }));
-  console.log(prd);
 
   const coins = await pg("crypto")
     .select("*")
@@ -34,7 +33,6 @@ const exchangeId = "hitbtc",
     const trade = `${coins[i].symbol}/BTC`;
     const s = prd.find(c => c.name === trade);
     if (s) {
-      console.log(`Find ${coins[i].slug}`);
       await getBtc(
         exchange,
         {
@@ -44,7 +42,6 @@ const exchangeId = "hitbtc",
         s.key
       );
     } else {
-      console.log(`CANTTTTT NOT FIND ${coins[i].slug}`);
     }
   }
 })();
