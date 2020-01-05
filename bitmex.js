@@ -13,13 +13,17 @@ const exchangeId = "bitmex",
   });
 
 (async () => {
-  // await getBtc(
-  //   exchange,
-  //   { name: "bitcoin".concat(`_${exchangeId}`), symbol: "BTC" },
-  //   "BTC/USDT"
-  // );
+  await getBtc(
+    exchange,
+    { name: "bitcoin".concat(`_${exchangeId}`), symbol: "BTC" },
+    "BTC/USD"
+  );
   const prdA = await exchange.loadMarkets();
-  const prd = Object.keys(prdA);
+  const prd = Object.entries(prdA).map(c => ({
+    key: c[0],
+    name: `${c[1].base}/${c[1].quote}`
+  }));
+  console.log(prd);
 
   const coins = await pg("crypto")
     .select("*")
@@ -28,16 +32,16 @@ const exchangeId = "bitmex",
     .offset(1);
   for (let i = 0; i < coins.length; i++) {
     const trade = `${coins[i].symbol}/BTC`;
-
-    if (prd.find(c => c === trade)) {
+    const s = prd.find(c => c.name === trade);
+    if (s) {
       console.log(`Find ${coins[i].slug}`);
       await getBtc(
         exchange,
         {
           name: coins[i].slug.concat(`_${exchangeId}`),
-          symbol: coins[i].symbol
+          symbol: trade
         },
-        trade
+        s.key
       );
     } else {
       console.log(`CANTTTTT NOT FIND ${coins[i].slug}`);

@@ -25,22 +25,4 @@ const getBtc = async (exchange, coin, symbol) => {
   }
 };
 
-const getCoin = async coin => {
-  // await getBtc(
-  //   { name: "bitcoin".concat(`_${exchangeId}`), symbol: "BTC" },
-  //   "BTC/USDT"
-  // );
-  const coins = await pg("crypto")
-    .select("*")
-    .orderBy("cmc_rank")
-    .limit(100)
-    .offset(1);
-  for (let i = 0; i < coins.length; i++) {
-    await getBtc(
-      { name: coins[i].slug.concat(`_${exchangeId}`), symbol: coins[i].symbol },
-      `${coins[i].symbol}/BTC`
-    );
-  }
-};
-
 module.exports = getBtc;

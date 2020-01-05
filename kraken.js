@@ -3,7 +3,7 @@ const pg = require("./database");
 const upsert = require("./upsert");
 const getBtc = require("./getCoinFactory");
 
-const exchangeId = "bittrex",
+const exchangeId = "kraken",
   exchangeClass = ccxt[exchangeId],
   exchange = new exchangeClass({
     // apiKey: "jshXgEK1klUiDZk8WKeMq2sv92SGKMRUqA6FRH1E42Qy9QjsvbGTvwE3i0otSoOj",
@@ -24,7 +24,6 @@ const exchangeId = "bittrex",
     name: `${c[1].base}/${c[1].quote}`
   }));
   console.log(prd);
-
   const coins = await pg("crypto")
     .select("*")
     .orderBy("cmc_rank")

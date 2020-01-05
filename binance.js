@@ -13,11 +13,11 @@ const exchangeId = "binance",
   });
 
 (async () => {
-  // await getBtc(
-  //   exchange,
-  //   { name: "bitcoin".concat(`_${exchangeId}`), symbol: "BTC" },
-  //   "BTC/USDT"
-  // );
+  await getBtc(
+    exchange,
+    { name: "bitcoin".concat(`_${exchangeId}`), symbol: "BTC" },
+    "BTC/USDT"
+  );
   const prdA = await exchange.loadMarkets();
   const prd = Object.keys(prdA);
 
