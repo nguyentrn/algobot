@@ -1,8 +1,15 @@
 const ccxt = require("ccxt");
 const pg = require("./database");
 const upsert = require("./upsert");
+const random = (from, range) => Math.floor(Math.random() * range + from);
 
-const getBtc = async (exchange, coin, symbol) => {
+const delay = time => {
+  return new Promise(function(resolve) {
+    setTimeout(resolve, time);
+  });
+};
+
+const getBtc = async (exchange, coin, symbol, isDelay = false) => {
   try {
     if (exchange.has["fetchOHLCV"]) {
       console.log(coin.name);
@@ -27,10 +34,17 @@ const getBtc = async (exchange, coin, symbol) => {
         if (lastTime[0].max && !trades.length) {
           break;
         }
+
+        if (isDelay) {
+          await delay(random(0, 1000));
+        }
       }
     }
   } catch (err) {
     console.log(err.name);
+    if (err.name === "DDoSProtection") {
+      return;
+    }
   }
 };
 

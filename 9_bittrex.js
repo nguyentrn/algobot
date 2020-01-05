@@ -3,6 +3,13 @@ const pg = require("./database");
 const upsert = require("./upsert");
 const getBtc = require("./getCoinFactory");
 
+const random = (from, range) => Math.floor(Math.random() * range + from);
+
+const delay = time => {
+  return new Promise(function(resolve) {
+    setTimeout(resolve, time);
+  });
+};
 const exchangeId = "bittrex",
   exchangeClass = ccxt[exchangeId],
   exchange = new exchangeClass({
@@ -111,7 +118,8 @@ const exchangeId = "bittrex",
           name: coins[i].slug.concat(`_${exchangeId}`),
           symbol: trade
         },
-        s.key
+        s.key,
+        true
       );
     } else {
     }
