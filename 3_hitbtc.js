@@ -27,7 +27,7 @@ const exchangeId = "hitbtc",
   const coins = await pg("crypto")
     .select("*")
     .orderBy("cmc_rank")
-    .limit(100)
+     
     .offset(1);
   for (let i = 0; i < coins.length; i++) {
     const trade = `${coins[i].symbol}/BTC`;
