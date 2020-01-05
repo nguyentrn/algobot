@@ -31,7 +31,7 @@ const createTable = async exchange => {
   const res = await pg("crypto")
     .select("*")
     .orderBy("cmc_rank");
-  // .limit(100);
+
   const x = res.filter(s =>
     s.name === "Bitcoin" ? s : prd.find(c => c === s.symbol)
   );
@@ -57,13 +57,29 @@ const createTable = async exchange => {
   });
 };
 
+const createIndex = async () => {
+  const tablesRes = await pg.raw(
+    "SELECT tablename FROM pg_catalog.pg_tables WHERE schemaname != 'pg_catalog' AND schemaname != 'information_schema'"
+  );
+  const tables = [];
+  tablesRes.rows.forEach(tr => tables.push(tr.tablename));
+  console.log(tables);
+  for (let i = 489; i < tables.length; i++) {
+    const tb = tables[i];
+    console.log(tb, i);
+    await pg.schema.table(tb, function(table) {
+      table.index("time", `${tb}_time_1`);
+    });
+  }
+};
+
 (async () => {
+  // await createIndex();
   await createTable("bitmex"); //24,860
   await createTable("binance"); //1687
   await createTable("hitbtc"); //11,933
   // await createTable("liquid"); //21,251
   await createTable("coinbasepro"); //2079
-  await createTable("kraken"); //8539
   await createTable("bitfinex"); //8822
   // await createTable("bitstamp"); //16,632
   // await createTable("poloniex"); //7352
@@ -75,5 +91,6 @@ const createTable = async exchange => {
   // await createTable("okex"); //3767
   // await createTable("zbcom"); //5694
   // await createTable("upbit"); //9407
+  //////////////////////////// await createTable("kraken"); //8539
   ////////////////////////////await createTable("deribit"); //25,589
 })();

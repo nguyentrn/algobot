@@ -6,6 +6,14 @@ const ccxt = require("ccxt");
 const pg = require("./database");
 const upsert = require("./upsert");
 
+const random = (from, range) => Math.floor(Math.random() * range + from);
+
+const delay = time => {
+  return new Promise(function(resolve) {
+    setTimeout(resolve, time);
+  });
+};
+
 const getBtc = async (coin, symbol) => {
   for (let i = 0; i < 100000; i++) {
     const lastTime = await pg(coin.name).min("time");
@@ -35,7 +43,7 @@ const getBtc = async (coin, symbol) => {
 
     // console.log(trades);
     await upsert(coin, trades);
-
+    await delay(random(0, 1000));
     if (lastTime[0].max && !trades.length) {
       break;
     }
