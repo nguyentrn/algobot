@@ -15,14 +15,13 @@ const delay = time => {
 };
 
 const getBtc = async (coin, symbol) => {
+  console.log(coin.name);
   for (let i = 0; i < 100000; i++) {
     const lastTime = await pg(coin.name).min("time");
-    console.log(lastTime[0].min);
 
     const since = lastTime[0].min
       ? new Date(lastTime[0].min).getTime() - 60000
       : new Date().getTime();
-    console.log(since, since + 60000 * 300);
     const res = await publicClient.getProductHistoricRates(
       symbol.replace("/", "-"),
       {

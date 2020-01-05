@@ -28,7 +28,6 @@ const exchangeId = "bittrex",
     .orderBy("cmc_rank")
     .limit(100)
     .offset(1);
-  console.log(coins.length);
   for (let i = 0; i < coins.length; i++) {
     const trade = `${coins[i].symbol}/BTC`;
     let s = null;
@@ -115,7 +114,6 @@ const exchangeId = "bittrex",
         s.key
       );
     } else {
-      console.log(`CANT NOT FIND ${coins[i].slug}`);
     }
   }
 })();
