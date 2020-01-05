@@ -1,9 +1,48 @@
+const CoinbasePro = require("coinbase-pro");
+const publicClient = new CoinbasePro.PublicClient();
+
 const ccxt = require("ccxt");
+// const axios = require("axios");
 const pg = require("./database");
 const upsert = require("./upsert");
-const getBtc = require("./getCoinFactory");
 
-const exchangeId = "kraken",
+const getBtc = async (coin, symbol) => {
+  for (let i = 0; i < 100000; i++) {
+    const lastTime = await pg(coin.name).min("time");
+    console.log(lastTime[0].min);
+
+    const since = lastTime[0].min
+      ? new Date(lastTime[0].min).getTime() - 60000
+      : new Date().getTime();
+    console.log(since, since + 60000 * 300);
+    const res = await publicClient.getProductHistoricRates(
+      symbol.replace("/", "-"),
+      {
+        granularity: 60,
+        start: new Date(since - 60000 * 300),
+        end: new Date(since)
+      }
+    );
+
+    const trades = res.map(r => [
+      (r[0] = r[0] * 1000),
+      r[1],
+      r[2],
+      r[3],
+      r[4],
+      r[5]
+    ]);
+
+    // console.log(trades);
+    await upsert(coin, trades);
+
+    if (lastTime[0].max && !trades.length) {
+      break;
+    }
+  }
+};
+
+const exchangeId = "coinbasepro",
   exchangeClass = ccxt[exchangeId],
   exchange = new exchangeClass({
     // apiKey: "jshXgEK1klUiDZk8WKeMq2sv92SGKMRUqA6FRH1E42Qy9QjsvbGTvwE3i0otSoOj",
@@ -14,9 +53,8 @@ const exchangeId = "kraken",
 
 (async () => {
   await getBtc(
-    exchange,
     { name: "bitcoin".concat(`_${exchangeId}`), symbol: "BTC" },
-    "BTC/USDT"
+    "BTC/USD"
   );
   const prdA = await exchange.loadMarkets();
   const prd = Object.entries(prdA).map(c => ({
@@ -24,6 +62,7 @@ const exchangeId = "kraken",
     name: `${c[1].base}/${c[1].quote}`
   }));
   console.log(prd);
+
   const coins = await pg("crypto")
     .select("*")
     .orderBy("cmc_rank")
@@ -35,7 +74,6 @@ const exchangeId = "kraken",
     if (s) {
       console.log(`Find ${coins[i].slug}`);
       await getBtc(
-        exchange,
         {
           name: coins[i].slug.concat(`_${exchangeId}`),
           symbol: trade

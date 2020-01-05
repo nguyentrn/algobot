@@ -30,8 +30,8 @@ const createTable = async exchange => {
   tablesRes.rows.forEach(tr => tables.push(tr.tablename));
   const res = await pg("crypto")
     .select("*")
-    .orderBy("cmc_rank")
-    .limit(100);
+    .orderBy("cmc_rank");
+  // .limit(100);
   const x = res.filter(s =>
     s.name === "Bitcoin" ? s : prd.find(c => c === s.symbol)
   );
@@ -58,16 +58,16 @@ const createTable = async exchange => {
 };
 
 (async () => {
-  // await createTable("bitmex"); //24,860
-  // await createTable("binance"); //1687
+  await createTable("bitmex"); //24,860
+  await createTable("binance"); //1687
   await createTable("hitbtc"); //11,933
   // await createTable("liquid"); //21,251
-  // await createTable("coinbasepro"); //2079
-  // await createTable("kraken"); //8539
-  // await createTable("bitfinex"); //8822
+  await createTable("coinbasepro"); //2079
+  await createTable("kraken"); //8539
+  await createTable("bitfinex"); //8822
   // await createTable("bitstamp"); //16,632
   // await createTable("poloniex"); //7352
-  // await createTable("bittrex"); //7580
+  await createTable("bittrex"); //7580
   // await createTable("gemini"); //26,281
   // await createTable("bitso"); //13,471
   // await createTable("bitflyer"); //2079
