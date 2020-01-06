@@ -16,7 +16,7 @@ const delay = time => {
 
 const getBtc = async (coin, symbol) => {
   for (let i = 0; i < 100000; i++) {
-    console.log(coin.name);
+    // console.log(coin.name);
     try {
       const lastTime = await pg(coin.name).min("time");
       const interval = 60;
@@ -32,7 +32,7 @@ const getBtc = async (coin, symbol) => {
           end: new Date(since)
         }
       );
-      console.log(res);
+      // console.log(res);
 
       const trades = res.map(r => [
         (r[0] = r[0] * 1000),
