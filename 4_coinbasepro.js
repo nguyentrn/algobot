@@ -15,36 +15,42 @@ const delay = time => {
 };
 
 const getBtc = async (coin, symbol) => {
-  console.log(coin.name);
   for (let i = 0; i < 100000; i++) {
-    const lastTime = await pg(coin.name).min("time");
+    console.log(coin.name);
+    try {
+      const lastTime = await pg(coin.name).min("time");
+      const interval = 60;
+      const since = lastTime[0].min
+        ? new Date(lastTime[0].min).getTime() - 60000
+        : new Date().getTime();
+      console.log(since);
+      const res = await publicClient.getProductHistoricRates(
+        symbol.replace("/", "-"),
+        {
+          granularity: interval,
+          start: new Date(since - 60000 * 300),
+          end: new Date(since)
+        }
+      );
+      console.log(res);
 
-    const since = lastTime[0].min
-      ? new Date(lastTime[0].min).getTime() - 60000
-      : new Date().getTime();
-    const res = await publicClient.getProductHistoricRates(
-      symbol.replace("/", "-"),
-      {
-        granularity: 60,
-        start: new Date(since - 60000 * 300),
-        end: new Date(since)
+      const trades = res.map(r => [
+        (r[0] = r[0] * 1000),
+        r[1],
+        r[2],
+        r[3],
+        r[4],
+        r[5]
+      ]);
+
+      // console.log(trades);
+      await upsert(coin, trades);
+      await delay(random(0, 1000));
+      if (lastTime[0].min && !trades.length) {
+        break;
       }
-    );
-
-    const trades = res.map(r => [
-      (r[0] = r[0] * 1000),
-      r[1],
-      r[2],
-      r[3],
-      r[4],
-      r[5]
-    ]);
-
-    // console.log(trades);
-    await upsert(coin, trades);
-    await delay(random(0, 1000));
-    if (lastTime[0].max && !trades.length) {
-      break;
+    } catch (err) {
+      console.log(err.detail);
     }
   }
 };
@@ -72,7 +78,7 @@ const exchangeId = "coinbasepro",
   const coins = await pg("crypto")
     .select("*")
     .orderBy("cmc_rank")
-     
+
     .offset(1);
   for (let i = 0; i < coins.length; i++) {
     const trade = `${coins[i].symbol}/BTC`;
@@ -86,7 +92,7 @@ const exchangeId = "coinbasepro",
         s.key
       );
     } else {
-      console.log(`CANTTTTT NOT FIND ${coins[i].slug}`);
+       
     }
   }
 })();

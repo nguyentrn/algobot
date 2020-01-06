@@ -33,8 +33,9 @@ const exchangeId = "bittrex",
   const coins = await pg("crypto")
     .select("*")
     .orderBy("cmc_rank")
-     
-    .offset(1);
+
+    .offset(500);
+  console.log(coins.length);
   for (let i = 0; i < coins.length; i++) {
     const trade = `${coins[i].symbol}/BTC`;
     let s = null;

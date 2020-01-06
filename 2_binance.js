@@ -39,7 +39,7 @@ const exchangeId = "binance",
         trade
       );
     } else {
-      console.log(`CANTTTTT NOT FIND ${coins[i].slug}`);
+       
     }
   }
 })();

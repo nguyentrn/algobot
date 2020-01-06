@@ -42,7 +42,7 @@ const exchangeId = "bitmex",
         s.key
       );
     } else {
-      console.log(`CANTTTTT NOT FIND ${coins[i].slug}`);
+       
     }
   }
 })();

@@ -36,14 +36,14 @@ const getBtc = async (exchange, coin, symbol, isDelay = false) => {
         }
 
         if (isDelay) {
-          await delay(random(0, 1000));
+          await delay(random(500, 1500));
         }
       }
     }
   } catch (err) {
     console.log(err.name);
     if (err.name === "DDoSProtection") {
-      return;
+      delay(86400);
     }
   }
 };
