@@ -34,10 +34,6 @@ const getBtc = async (exchange, coin, symbol, isDelay = false) => {
         if (lastTime[0].max && !trades.length) {
           break;
         }
-
-        if (isDelay) {
-          await delay(random(1000, 4000));
-        }
       }
     }
   } catch (err) {

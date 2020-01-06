@@ -28,9 +28,9 @@ const exchangeId = "bittrex",
   const coins = await pg("crypto")
     .select("*")
     .orderBy("cmc_rank")
-    .limit(500)
+    // .limit(500)
 
-    .offset(500);
+    // .offset(500);
   await getBtc(
     exchange,
     { name: "bitcoin".concat(`_${exchangeId}`), symbol: "BTC" },
@@ -38,7 +38,6 @@ const exchangeId = "bittrex",
   );
 
   for (let i = 0; i < coins.length; i++) {
-    console.log(i);
     const trade = `${coins[i].symbol}/BTC`;
     let s = null;
     if (
@@ -46,6 +45,7 @@ const exchangeId = "bittrex",
       coins[i].slug !== "adtoken" &&
       coins[i].slug !== "adx_net" &&
       coins[i].slug !== "aelf" &&
+      coins[i].slug !== "aergo" &&
       coins[i].slug !== "aidcoin" &&
       coins[i].slug !== "ankr" &&
       coins[i].slug !== "aragon" &&
@@ -71,9 +71,11 @@ const exchangeId = "bittrex",
       coins[i].slug !== "data" &&
       coins[i].slug !== "decent" &&
       coins[i].slug !== "dent" &&
+      coins[i].slug !== "district0x" &&
       coins[i].slug !== "dmarket" &&
       coins[i].slug !== "dusk_network" &&
       coins[i].slug !== "dragonchain" &&
+      coins[i].slug !== "edgeless" &&
       coins[i].slug !== "enigma" &&
       coins[i].slug !== "factom" &&
       coins[i].slug !== "firstblood" &&
@@ -168,6 +170,7 @@ const exchangeId = "bittrex",
         s.key,
         true
       );
+      await delay(random(1000, 1000));
     } else {
     }
   }
