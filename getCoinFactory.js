@@ -18,7 +18,7 @@ const getBtc = async (exchange, coin, symbol, isDelay = false) => {
         const since = lastTime[0].max
           ? new Date(lastTime[0].max).getTime() + 60000
           : 1000000000000;
-        console.log(since);
+        // console.log(since);
         // const symbol = "BTC/USDT";
         const timeframe = "1m";
         const limit = 1000;
