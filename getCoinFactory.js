@@ -36,7 +36,7 @@ const getBtc = async (exchange, coin, symbol, isDelay = false) => {
         }
 
         if (isDelay) {
-          await delay(random(500, 1500));
+          await delay(random(1000, 4000));
         }
       }
     }

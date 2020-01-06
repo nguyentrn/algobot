@@ -23,7 +23,7 @@ const getBtc = async (coin, symbol) => {
       const since = lastTime[0].min
         ? new Date(lastTime[0].min).getTime() - 60000
         : new Date().getTime();
-      console.log(since);
+      // console.log(since);
       const res = await publicClient.getProductHistoricRates(
         symbol.replace("/", "-"),
         {
@@ -92,7 +92,6 @@ const exchangeId = "coinbasepro",
         s.key
       );
     } else {
-       
     }
   }
 })();
