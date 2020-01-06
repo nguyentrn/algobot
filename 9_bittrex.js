@@ -27,10 +27,10 @@ const exchangeId = "bittrex",
   }));
   const coins = await pg("crypto")
     .select("*")
-    .orderBy("cmc_rank")
-    // .limit(500)
+    .orderBy("cmc_rank");
+  // .limit(500)
 
-    // .offset(500);
+  // .offset(500);
   await getBtc(
     exchange,
     { name: "bitcoin".concat(`_${exchangeId}`), symbol: "BTC" },
@@ -41,21 +41,29 @@ const exchangeId = "bittrex",
     const trade = `${coins[i].symbol}/BTC`;
     let s = null;
     if (
+      coins[i].slug !== "12ships_bittrex" &&
       coins[i].slug !== "abyss_token" &&
       coins[i].slug !== "adtoken" &&
       coins[i].slug !== "adx_net" &&
       coins[i].slug !== "aelf" &&
       coins[i].slug !== "aergo" &&
       coins[i].slug !== "aidcoin" &&
+      coins[i].slug !== "akropolis_bittrex" &&
+      coins[i].slug !== "apm_coin_bittrex" &&
       coins[i].slug !== "ankr" &&
       coins[i].slug !== "aragon" &&
       coins[i].slug !== "bancor" &&
+      coins[i].slug !== "bankex_bittrex" &&
       coins[i].slug !== "bittorrent" &&
+      coins[i].slug !== "blockcloud_bittrex" &&
+      coins[i].slug !== "blocknet_bittrex" &&
       coins[i].slug !== "blocktrade_token" &&
       coins[i].slug !== "blockv" &&
+      coins[i].slug !== "bloc_money_bittrex" &&
       coins[i].slug !== "blue_whale_exchange" &&
       coins[i].slug !== "bnktothefuture" &&
       coins[i].slug !== "bora" &&
+      coins[i].slug !== "brz_bittrex" &&
       coins[i].slug !== "btu_protocol" &&
       coins[i].slug !== "chromia" &&
       coins[i].slug !== "cindicator" &&
@@ -63,6 +71,7 @@ const exchangeId = "bittrex",
       coins[i].slug !== "contents_protocol" &&
       coins[i].slug !== "cortex" &&
       coins[i].slug !== "cosmos" &&
+      coins[i].slug !== "cosmo_coin_bittrex" &&
       coins[i].slug !== "crowd_machine" &&
       coins[i].slug !== "cryptaur" &&
       coins[i].slug !== "crypto_com" &&
@@ -78,9 +87,11 @@ const exchangeId = "bittrex",
       coins[i].slug !== "edgeless" &&
       coins[i].slug !== "enigma" &&
       coins[i].slug !== "factom" &&
+      coins[i].slug !== "firmachain_bittrex" &&
       coins[i].slug !== "firstblood" &&
       coins[i].slug !== "fleta" &&
       coins[i].slug !== "flexacoin" &&
+      coins[i].slug !== "fnb_protocol_bittrex" &&
       coins[i].slug !== "function_x" &&
       coins[i].slug !== "fusion" &&
       coins[i].slug !== "gamecredits" &&
@@ -89,15 +100,18 @@ const exchangeId = "bittrex",
       coins[i].slug !== "gochain" &&
       coins[i].slug !== "grin" &&
       coins[i].slug !== "guppy" &&
+      coins[i].slug !== "hdac_bittrex" &&
       coins[i].slug !== "hedgetrade" &&
       coins[i].slug !== "hxro" &&
       coins[i].slug !== "humaniq" &&
+      coins[i].slug !== "hycon_bittrex" &&
       coins[i].slug !== "hydrogen" &&
       coins[i].slug !== "iht_real_estate_protocol" &&
       coins[i].slug !== "incent" &&
       coins[i].slug !== "ion" &&
       coins[i].slug !== "iostoken" &&
       coins[i].slug !== "iotex" &&
+      coins[i].slug !== "jibrel_network_bittrex" &&
       coins[i].slug !== "lambda" &&
       coins[i].slug !== "libra_credit" &&
       coins[i].slug !== "loopring" &&
@@ -108,6 +122,10 @@ const exchangeId = "bittrex",
       coins[i].slug !== "maidsafecoin" &&
       coins[i].slug !== "mainframe" &&
       coins[i].slug !== "medibloc" &&
+      coins[i].slug !== "metadium_bittrex" &&
+      coins[i].slug !== "metronome" &&
+      coins[i].slug !== "morpheus_network_bittrex" &&
+      coins[i].slug !== "moss_coin_bittrex" &&
       coins[i].slug !== "naga" &&
       coins[i].slug !== "nkn" &&
       coins[i].slug !== "nolimitcoin" &&
@@ -117,6 +135,7 @@ const exchangeId = "bittrex",
       coins[i].slug !== "omisego" &&
       coins[i].slug !== "ongsocial" &&
       coins[i].slug !== "ontology" &&
+      coins[i].slug !== "ontology_gas_bittrex" &&
       coins[i].slug !== "orbs" &&
       coins[i].slug !== "origintrail" &&
       coins[i].slug !== "ost" &&
@@ -124,33 +143,48 @@ const exchangeId = "bittrex",
       coins[i].slug !== "particl" &&
       coins[i].slug !== "patientory" &&
       coins[i].slug !== "pchain" &&
+      coins[i].slug !== "pixel_bittrex" &&
+      coins[i].slug !== "plair_bittrex" &&
       coins[i].slug !== "planet" &&
       coins[i].slug !== "playchip" &&
+      coins[i].slug !== "pledge_coin_bittrex" &&
       coins[i].slug !== "potcoin" &&
       coins[i].slug !== "prometeus" &&
       coins[i].slug !== "pton" &&
       coins[i].slug !== "pumapay" &&
       coins[i].slug !== "pundi_x" &&
       coins[i].slug !== "quant" &&
+      coins[i].slug !== "quantum_resistant_ledger_bittrex" &&
       coins[i].slug !== "qtum" &&
       coins[i].slug !== "refereum" &&
       coins[i].slug !== "ripio_credit_network" &&
       coins[i].slug !== "rlc" &&
+      coins[i].slug !== "salus_bittrex" &&
+      coins[i].slug !== "sentinel_protocol_bittrex" &&
       coins[i].slug !== "sirin_labs_token" &&
+      coins[i].slug !== "six_bittrex" &&
       coins[i].slug !== "smartlands" &&
+      coins[i].slug !== "social_lending_token_bittrex" &&
       coins[i].slug !== "spacechain" &&
+      coins[i].slug !== "spin_protocol_bittrex" &&
       coins[i].slug !== "status" &&
       coins[i].slug !== "storj" &&
+      coins[i].slug !== "storm_bittrex" &&
       coins[i].slug !== "stpt" &&
       coins[i].slug !== "susd" &&
       coins[i].slug !== "synthetix_network_token" &&
+      coins[i].slug !== "tap_bittrex" &&
       coins[i].slug !== "temco" &&
       coins[i].slug !== "tenx" &&
       coins[i].slug !== "ttc" &&
-      // coins[i].slug !== "uptoken" &&
+      coins[i].slug !== "tutors_diary_bittrex" &&
       coins[i].slug !== "uptoken" &&
+      coins[i].slug !== "uranus_bittrex" &&
+      coins[i].slug !== "utrust_bittrex" &&
       coins[i].slug !== "vechain" &&
       coins[i].slug !== "veriblock" &&
+      coins[i].slug !== "viberate_bittrex" &&
+      coins[i].slug !== "vite_bittrex" &&
       coins[i].slug !== "vodi_x" &&
       coins[i].slug !== "w_green_pay" &&
       coins[i].slug !== "xel" &&
