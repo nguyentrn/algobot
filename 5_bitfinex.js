@@ -15,7 +15,7 @@ const exchangeId = "bitfinex",
 (async () => {
   await getBtc(
     exchange,
-    { name: "bitcoin".concat(`_${exchangeId}`), symbol: "BTC" },
+    { name: "bitcoin".concat(`_bitfinex`), symbol: "BTC" },
     "BTC/USD"
   );
   const prdA = await exchange.loadMarkets();
@@ -26,7 +26,7 @@ const exchangeId = "bitfinex",
   const coins = await pg("crypto")
     .select("*")
     .orderBy("cmc_rank")
-     
+
     .offset(1);
   for (let i = 0; i < coins.length; i++) {
     const trade = `${coins[i].symbol}/BTC`;
@@ -35,13 +35,12 @@ const exchangeId = "bitfinex",
       await getBtc(
         exchange,
         {
-          name: coins[i].slug.concat(`_${exchangeId}`),
+          name: coins[i].slug.concat(`_bitfinex`),
           symbol: trade
         },
         s.key
       );
     } else {
-       
     }
   }
 })();

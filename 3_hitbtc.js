@@ -3,7 +3,7 @@ const pg = require("./database");
 const upsert = require("./upsert");
 const getBtc = require("./getCoinFactory");
 
-const exchangeId = "hitbtc",
+const exchangeId = "hitbtc2",
   exchangeClass = ccxt[exchangeId],
   exchange = new exchangeClass({
     // apiKey: "jshXgEK1klUiDZk8WKeMq2sv92SGKMRUqA6FRH1E42Qy9QjsvbGTvwE3i0otSoOj",
@@ -15,7 +15,7 @@ const exchangeId = "hitbtc",
 (async () => {
   await getBtc(
     exchange,
-    { name: "bitcoin".concat(`_${exchangeId}`), symbol: "BTC" },
+    { name: "bitcoin".concat(`_hitbtc`), symbol: "BTC" },
     "BTC/USDT"
   );
   const prdA = await exchange.loadMarkets();
@@ -27,7 +27,7 @@ const exchangeId = "hitbtc",
   const coins = await pg("crypto")
     .select("*")
     .orderBy("cmc_rank")
-     
+
     .offset(1);
   for (let i = 0; i < coins.length; i++) {
     const trade = `${coins[i].symbol}/BTC`;
@@ -36,7 +36,7 @@ const exchangeId = "hitbtc",
       await getBtc(
         exchange,
         {
-          name: coins[i].slug.concat(`_${exchangeId}`),
+          name: coins[i].slug.concat(`_hitbtc`),
           symbol: trade
         },
         s.key
